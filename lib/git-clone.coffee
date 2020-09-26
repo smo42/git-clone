@@ -22,7 +22,11 @@ module.exports = GitClone =
       type: 'boolean'
       default: true
       order: 2
-
+    nohttp_sslVerify:
+      description: 'Disable TLS/SSL verification for git command'
+      type: 'boolean'
+      default: true
+      order: 3
   name: "git-clone"
 
   activate: (state) ->
@@ -94,7 +98,11 @@ module.exports = GitClone =
     clone_stderr = ""
 
     command = 'git'
-    args = ['clone', repo_uri, full_path]
+    if atom.config.get("#{@name}.nohttp_sslVerify")
+      args = ['-c', 'http.sslVerify=false', 'clone', repo_uri, full_path]
+    else
+      args = ['clone', repo_uri, full_path]
+
     stderr = (output) -> clone_stderr = output
 
     exit = (code) ->
