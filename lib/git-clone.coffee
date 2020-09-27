@@ -99,7 +99,7 @@ module.exports = GitClone =
 
     command = 'git'
     if atom.config.get("#{@name}.nohttp_sslVerify")
-      args = ['-c', 'http.sslVerify=false', 'clone', repo_uri, full_path]
+      args = ['-c http.sslVerify=false clone', repo_uri, full_path]
     else
       args = ['clone', repo_uri, full_path]
 
